@@ -3,7 +3,7 @@
 
 $host = 'localhost';
 // PASTIKAN MENGGANTI 'NamaLengkap' SESUAI DENGAN NAMA DATABASE ANDA DI TAHAP 1
-$dbname = 'DB_SIMULASI_PBO_TRPL 1A_Dwita Listanti'; 
+$dbname = 'DB_SIMULASI_PBO_TRPL 1A _Dwita Listanti'; 
 $username = 'root'; // Default XAMPP/Laragon
 $password = '';     // Default XAMPP/Laragon kosong
 
