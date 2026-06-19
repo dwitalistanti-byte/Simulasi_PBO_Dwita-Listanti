@@ -1,5 +1,6 @@
 <?php
 // File: koneksi/database.php
+// file
 
 $host = 'localhost';
 // PASTIKAN MENGGANTI 'NamaLengkap' SESUAI DENGAN NAMA DATABASE ANDA DI TAHAP 1
