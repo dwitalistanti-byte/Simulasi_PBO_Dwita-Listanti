@@ -1,39 +1,32 @@
 <?php
-// File: PendaftaranReguler.php
 require_once 'Pendaftaran.php';
 
 class PendaftaranReguler extends Pendaftaran {
-    protected $pilihanProdi;
-    protected $lokasiKampus;
+    // [Tahap 4] Properti tambahan spesifik
+    private $pilihanProdi;
+    private $lokasiKampus;
 
-    public function __construct($id_pendaftaran, $nama_calon, $asal_sekolah, $nilai_ujian, $biayaDasar, $pilihanProdi, $lokasiKampus) {
-        parent::__construct($id_pendaftaran, $nama_calon, $asal_sekolah, $nilai_ujian, $biayaDasar);
-        $this->pilihanProdi = $pilihanProdi;
-        $this->lokasiKampus = $lokasiKampus;
+    public function __construct($id, $nama, $sekolah, $nilai, $biayaDasar, $prodi = null, $kampus = null) {
+        parent::__construct($id, $nama, $sekolah, $nilai, $biayaDasar);
+        $this->pilihanProdi = $prodi;
+        $this->lokasiKampus = $kampus;
     }
 
-    // Metode Query Spesifik dengan SELECT * dan WHERE jalur_pendaftaran = 'Reguler'
+    // [Tahap 4] Metode Query Spesifik Jalur Reguler
     public static function getDaftarReguler($db) {
-        $sql = "SELECT * FROM tabel_pendaftaran WHERE jalur_pendaftaran = 'Reguler'";
-        $stmt = $db->query($sql);
-        
-        $data = [];
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $data[] = new self(
-                $row['id_pendaftaran'], 
-                $row['nama_calon'], 
-                $row['asal_sekolah'], 
-                $row['nilai_ujian'], 
-                $row['biaya_pendaftaran_dasar'], 
-                $row['pilihan_prodi'], 
-                $row['lokasi_kampus']
-            );
-        }
-        return $data;
+        $query = "SELECT * FROM tabel_pendaftaran WHERE jalur_pendaftaran = 'Reguler'";
+        $stmt = $db->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // Placeholder untuk Tahap 5
-    public function hitungTotalBiaya() { return 0; }
-    public function tampilkanInfoJalur() { return ""; }
+    // [Tahap 5] Overriding hitungTotalBiaya: Tarif standar murni
+    public function hitungTotalBiaya() {
+        return $this->biayaPendaftaranDasar;
+    }
+
+    public function tampilkanInfoJalur() {
+        return "Prodi: " . $this->pilihanProdi . " | Kampus: " . $this->lokasiKampus;
+    }
 }
 ?>
